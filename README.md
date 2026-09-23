@@ -42,11 +42,12 @@ Supabase 프로젝트 `itsmine`(ref `oxeigksibzuuuiulnkaz`, 서울 리전)에 �
 앱은 서버에서 DB 계정으로 직접 접속하므로 영향이 없습니다.
 
 1. Supabase 대시보드 → 프로젝트 `itsmine` → **Connect** → **Transaction pooler** 연결 문자열을 복사합니다.
-   (비밀번호를 모르면 Project Settings → Database 에서 재설정)
+   (바로가기: https://supabase.com/dashboard/project/oxeigksibzuuuiulnkaz?showConnect=true&method=transaction ,
+   비밀번호를 모르면 Connect 창의 Reset database password)
 2. `.env.local` 또는 Vercel 환경 변수에 `DATABASE_URL`로 넣습니다.
 
 ```
-DATABASE_URL=postgresql://postgres.oxeigksibzuuuiulnkaz:<비밀번호>@<pooler 호스트>:6543/postgres
+DATABASE_URL=postgresql://postgres.oxeigksibzuuuiulnkaz:<비밀번호>@aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres
 ```
 
 서버가 시작할 때 `lib/db/schema.ts`의 `BOOTSTRAP_SQL`을 다시 실행하지만 모두 `if not exists`라 안전합니다.
