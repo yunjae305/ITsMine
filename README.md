@@ -35,6 +35,22 @@ npm run typecheck
 npm run build
 ```
 
+## Supabase 연결
+
+Supabase 프로젝트 `itsmine`(ref `oxeigksibzuuuiulnkaz`, 서울 리전)에 테이블이 이미 만들어져 있습니다.
+모든 테이블에 RLS 를 켜고 정책은 두지 않아 anon/publishable 키로는 읽고 쓸 수 없습니다.
+앱은 서버에서 DB 계정으로 직접 접속하므로 영향이 없습니다.
+
+1. Supabase 대시보드 → 프로젝트 `itsmine` → **Connect** → **Transaction pooler** 연결 문자열을 복사합니다.
+   (비밀번호를 모르면 Project Settings → Database 에서 재설정)
+2. `.env.local` 또는 Vercel 환경 변수에 `DATABASE_URL`로 넣습니다.
+
+```
+DATABASE_URL=postgresql://postgres.oxeigksibzuuuiulnkaz:<비밀번호>@<pooler 호스트>:6543/postgres
+```
+
+서버가 시작할 때 `lib/db/schema.ts`의 `BOOTSTRAP_SQL`을 다시 실행하지만 모두 `if not exists`라 안전합니다.
+
 ## 배포 메모
 
 - Vercel 등 서버리스 환경에서는 PGlite 파일 저장이 유지되지 않으므로 `DATABASE_URL`(Supabase/Neon 등 Postgres)을 꼭 설정하세요.

@@ -173,4 +173,22 @@ create table if not exists archives (
   created_at timestamptz not null default now()
 );
 create index if not exists archives_user_idx on archives(user_id, created_at desc);
+create index if not exists sessions_user_idx on sessions(user_id);
+create index if not exists groups_owner_idx on groups(owner_user_id);
+create index if not exists invites_group_idx on invites(group_id);
+create index if not exists invites_member_idx on invites(member_id);
+create index if not exists receipts_paid_by_idx on receipts(paid_by_member_id);
+create index if not exists receipts_created_by_idx on receipts(created_by_member_id);
+create index if not exists notifications_group_idx on notifications(group_id);
+create index if not exists archives_group_idx on archives(group_id);
+-- Supabase 는 public 스키마를 REST API 로 공개하므로 RLS 를 켜 두어 anon 키로는 읽을 수 없게 한다.
+-- 앱은 서버에서 DB 소유자 계정으로 직접 접속하므로 RLS 의 영향을 받지 않는다.
+alter table users enable row level security;
+alter table sessions enable row level security;
+alter table groups enable row level security;
+alter table members enable row level security;
+alter table invites enable row level security;
+alter table receipts enable row level security;
+alter table notifications enable row level security;
+alter table archives enable row level security;
 `;
